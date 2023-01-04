@@ -23,4 +23,26 @@ const insertProduct = (prod) =>
     })
 }
 
-insertProduct({name: "idk", price:798})
+const listProducts = async () => 
+{
+    const prods = await new Promise((resolve, reject)=>{
+        client.list({},function(err, response){
+          if(err) reject (err)
+          resolve(response)
+        }
+    )})
+    return prods; 
+}
+
+const deleteProduct = (id) => 
+{
+    client.Delete({id: id}, function(err, response){
+        console.log(response)
+    })
+}
+
+module.exports = {
+    deleteProduct, 
+    listProducts, 
+    insertProduct
+}

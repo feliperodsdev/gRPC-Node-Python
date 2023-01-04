@@ -12,10 +12,14 @@ class GrpcService(protobufs.product_pb2_grpc.ProductServiceServicer):
         return product[0]
 
     def Insert(self, request, context):
-        product = ProductItem(id=len(fakeData) + 1, name=request.name,
+        idHigh = fakeData[len(fakeData)-1].id+1
+        product = ProductItem(id=idHigh, name=request.name,
                         price=request.price)
         fakeData.append(product)
         return product
+
+    def List(self, request, context):
+        return ProductList(Products=fakeData)
 
     def Delete(self, request, context):
         product = [x for x in fakeData if x.id == request.id]
